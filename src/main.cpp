@@ -38,27 +38,26 @@ void updateDMX() {
   #endif
 }
 
-void setup()
-{
+void setup() {
   // initialize button state
   for (uint16_t i = 0; i < FIXTURES; i++)
     pinMode(buttonPins[i], INPUT_PULLUP);
   memset(buttonTime, 0, sizeof(buttonTime));
 
-  // initialize light state
   #ifdef DEBUG
   Serial.begin(9600);
   #else
   DMX.begin(universeSize);
   RS485.noReceive();
   #endif
+
+  // initialize light state
   memset(lightState, 0, sizeof(lightState));
   memset(lightValue, 0, sizeof(lightValue));
   updateDMX();
 }
 
-void loop()
-{
+void loop() {
   uint16_t retransmitTimer = 0;
   while (1) {
     bool changed = false;
